@@ -17,27 +17,31 @@ socket.on('disconnect', function() {
 });
 
 socket.on('newMessage', function(message) {
-    
     var formatTime = moment(message.createdAt).format('h:mm a');
-    var li = jQuery('<li></li>');
+    var template = jQuery('#message-template').html();
 
-    li.text(`${message.from} ${formatTime}: ${message.text}`);
+    var html = Mustache.render(template, {
+        from: message.from,
+        text: message.text,
+        createdAt: formatTime
+    });
 
-    jQuery('#messages').append(li);
+    jQuery('#messages').append(html);
 });
 
 socket.on('newLocationMessage', function(message){
     
     formatTime = moment(message.createdAt).format('h:mm a');
 
-    var li = jQuery('<li></li>');
-    var a = jQuery('<a target="_blank">My current location</a>');
+    var template = jQuery('#location-message-template').html();
 
-    li.text(`${message.from} ${formatTime}: `);
-    a.attr('href', message.url);
-    li.append(a);
+    var html = Mustache.render(template, {
+        from: message.from,
+        url: message.url,
+        createdAt: message.createdAt
+    });
 
-    jQuery('#messages').append(li);
+    jQuery('#messages').append(html);
 });
 
 jQuery('#message-form').on('submit', function(e){
