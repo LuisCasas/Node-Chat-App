@@ -45,7 +45,12 @@ locationButton.on('click', function (){
     }
 
     navigator.geolocation.getCurrentPosition(function(position){
-        console.log(position);
+        //console.log(position);
+
+        socket.emit('createLocationMessage', {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+        });
     }, function(){
         alert('Unable to fetch location');
     });
