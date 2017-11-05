@@ -1,3 +1,9 @@
+/*
+    To improve:
+    @ support room name lower/upper case
+    @ unique username
+    @ show active rooms on the login page
+*/
 const path = require('path');
 const express = require('express');
 const socketIO = require('socket.io');
@@ -22,6 +28,10 @@ io.on('connection', (socket) => {
 
         if(!isRealString(params.name) || !isRealString(params.room)){
             return callback('Name and room are required');
+        }
+
+        if(users.getUserName(params.name.trim().toLowerCase())){
+            return callback(`The name ${params.name} is already taken, please try a different name.`);
         }
         
         socket.join(params.room);

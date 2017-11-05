@@ -1,9 +1,3 @@
-[{
-    id: '',
-    name: 'John',
-    room: 'Room 1'
-}];
-
 class Users {
     constructor(){
         this.users = [];
@@ -28,6 +22,11 @@ class Users {
     getUser(id){
         var user = this.users.filter((user) => user.id === id);
         return user[0];
+    }
+
+    getUserName(name){
+        var username = this.users.filter((user) => user.name.trim().toLowerCase() === name);
+        return username[0];
     }
 
     getUserList(room){

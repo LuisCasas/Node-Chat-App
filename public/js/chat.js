@@ -22,6 +22,11 @@ socket.on('connect', function() {
 
    var params = jQuery.deparam(window.location.search);
 
+   // handle chat room name lowercase
+   if(params.room){
+        params.room = params.room.trim().toLowerCase();  
+   }
+
    socket.emit('join', params, function(err){
         if(err){
             alert(err);
